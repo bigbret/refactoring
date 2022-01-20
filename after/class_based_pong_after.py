@@ -30,16 +30,20 @@ class Paddle:
     def up(self):
         y = self.turt.ycor()
         y += 20
-        self.turt.sety(y)
-        #TODO this should have a getter and setter for the x and y coordinate instance
+        #self.turt.sety(y)
+        #New: setter 
+        self.set_ycord(y)
         #self.y_position = y
+        #New changed to setter
         self.set_ypos(y)
 
 
     def down(self):
         y = self.turt.ycor() #Get the current y coordinate
         y -= 20             #add 20px could also be y=y+20
-        self.turt.sety(y)    #move the paddle to the new y position
+        #self.turt.sety(y)    #move the paddle to the new y position
+        #New: setter
+        self.set_ycord(y)
         #self.y_position = y
         #New: changed to setter 
         self.set_ypos(y)
@@ -54,22 +58,37 @@ class Paddle:
         ''' returns turtle y_cord '''
         return self.turt.ycor()
     
+    #New
+    def set_ycord(self, ycord):
+        '''sets the turtle y coordinate'''
+        self.turt.sety(y)
+    
+    def set_xcord(self, xcord):
+        '''sets the turtle x coordinate'''
+        self.turt.setx(xcord)
+    
     #New: getter for x position instance variable
     def get_xpos(self):
+        '''returns the x position'''
         return self.x_position
     
     #New: getter for y position instance 
     def get_ypos(self):
+        '''returns the y position'''
         return self.y_position
 
     #New: setter for x position
     def set_xpos(self, xpos):
+        '''sets the x position'''
         self.x_position = xpos
     
     #New: setter for y position
     def set_ypos(self, ypos):
+        '''sets the y position'''
         self.y_position = ypos
     
+
+
 class Ball:
     # implements a Pong game ball
 
