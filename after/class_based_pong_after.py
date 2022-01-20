@@ -62,7 +62,7 @@ class Paddle:
     #New
     def set_ycord(self, ycord):
         '''sets the turtle y coordinate'''
-        self.turt.sety(y)
+        self.turt.sety(ycord)
     
     def set_xcord(self, xcord):
         '''sets the turtle x coordinate'''
@@ -135,9 +135,7 @@ class Ball:
         #elif new_y < -290:
             #self.set_ycor(-290)
             #self.ball_dy *= -1
-        
-        
-        
+
     def wrap_around(self, y_pos):
         '''Checks to see if the ball has gone beyond y boundary
         and wrap around'''
@@ -194,16 +192,79 @@ class Ball:
 
 
 
-def make_window(window_title, bgcolor, width, height):
-    '''this function creates a screen object and returns it'''
+'''New class that will encapsulate the game'''
+class Game:
+    
+    def __init__(self):
+        #window 
+        self.window = self.make_window("Pong - A CS151 Reproduction!", "black", 800, 600)
+        
+        #Score
+        self.player1_score = 0
+        self.player2_score = 0
+        
+        # paddels
+        self.paddle_1 = Paddle(-350, 0)
+        self.paddle_2 = Paddle(350, 0)
+        
+        # ball
+        self.ball = Ball(0.0925)
+        
+        # Pen
+        self.pen = make_turtle("square", "white", 1, 1, 0, 260)
+        self.pen.write("Player A: 0  Player B: 0", align="center", font=("Courier", 24, "normal"))
+        self.pen.hideturtle()
+        
+        # Keyboard bindings
+        self.window.listen() #Listen for keyboard input
+        self.window.onkeypress(self.paddle_1.up, "w") #when you press w run paddle_a_up
+        self.window.onkeypress(self.paddle_1.down, "s")
+        self.window.onkeypress(self.paddle_2.up, "Up")
+        self.window.onkeypress(self.paddle_2.down, "Down")
+        
 
-    window = turtle.getscreen() #Set the window size
-    window.title(window_title)
-    window.bgcolor(bgcolor)
-    window.setup(width, height)
-    window.tracer(0) #turns off screen updates for the window Speeds up the game
-    return window
+    def make_window(self,window_title, bgcolor, width, height):
+        '''this function creates a screen object and returns it'''
 
+        window = turtle.getscreen() #Set the window size
+        window.title(window_title)
+        window.bgcolor(bgcolor)
+        window.setup(width, height)
+        window.tracer(0) #turns off screen updates for the window Speeds up the game
+        return window
+
+    
+    def play(self):
+        '''this is where the main game loop is run'''
+        while True:
+            self.window.update() #This is the update to offset the wn.tracer(0)
+
+            self.ball.move()
+            # Border checking    
+            # Left and right
+            if self.ball.get_xcor() > 350:
+                self.score_player1 += 1
+                self.pen.clear()
+                self.pen.write("Player A: "+ str(self.score_player1) + "  Player B: "+ str(self.score_player2), align="center", font=("Courier", 24, "normal"))
+                self.ball.goto(0, 0)
+                self.ball.ball_dx *= -1
+                
+            elif self.ball.get_xcor() < -350:
+                self.score_player2 += 1
+                self.pen.clear()
+                self.pen.write("Player A: "+ str(self.score_player1) + "  Player B: "+ str(self.score_player2), align="center", font=("Courier", 24, "normal"))
+                self.ball.goto(0, 0)
+                self.ball.ball_dx *= -1
+            
+             # Paddle and ball collisions
+            if self.ball.get_xcor() < -340 and self.ball.get_xcor() > -350 and self.ball.get_ycor() < self.paddle_1.get_ycor() + 50 and self.ball.get_ycor() > self.paddle_1.get_ycor() - 50:
+                self.ball.setx(-340)
+                self.ball.ball_dx *= -1.5
+            
+            elif self.ball.get_xcor() > 340 and self.ball.get_xcor() < 350 and self.ball.get_ycor() < self.paddle_2.get_ycor() + 50 and self.ball.get_ycor() > self.paddle_2.get_ycor() - 50:
+                self.ball.setx(340)
+                self.ball.ball_dx *= -1.5
+                
 
 def make_turtle(shape, color, stretch_width, stretch_length, x_pos, y_pos):
     ''' creates a turtle and sets initial position '''
@@ -218,67 +279,8 @@ def make_turtle(shape, color, stretch_width, stretch_length, x_pos, y_pos):
     return turt
 
 
-def main():
-    ''' the main function where the game events take place '''
-
-    window = make_window("Pong - A CS151 Reproduction!", "black", 800, 600)
-
-    # Score
-    score_player1 = 0
-    score_player2 = 0
-
-    # paddels
-    paddle_1 = Paddle(-350, 0)
-    paddle_2 = Paddle(350, 0)
-
-    # ball
-    ball = Ball(0.0925)
-
-    # Pen
-    pen = make_turtle("square", "white", 1, 1, 0, 260)
-    pen.write("Player A: 0  Player B: 0", align="center", font=("Courier", 24, "normal"))
-    pen.hideturtle()
-
-    # Keyboard bindings
-    window.listen() #Listen for keyboard input
-    window.onkeypress(paddle_1.up, "w") #when you press w run paddle_a_up
-    window.onkeypress(paddle_1.down, "s")
-    window.onkeypress(paddle_2.up, "Up")
-    window.onkeypress(paddle_2.down, "Down")
-
-    # Main game loop
-    while True:
-        window.update() #This is the update to offset the wn.tracer(0)
-
-        ball.move()
-
-        # Border checking    
-        # Left and right
-        if ball.xcor() > 350:
-            score_player1 += 1
-            pen.clear()
-            pen.write("Player A: "+ str(score_player1) + "  Player B: "+ str(score_player2), align="center", font=("Courier", 24, "normal"))
-            ball.goto(0, 0)
-            ball.ball_dx *= -1
-
-        elif ball.xcor() < -350:
-            score_player2 += 1
-            pen.clear()
-            pen.write("Player A: "+ str(score_player1) + "  Player B: "+ str(score_player2), align="center", font=("Courier", 24, "normal"))
-            ball.goto(0, 0)
-            ball.ball_dx *= -1
-
-        # Paddle and ball collisions
-        if ball.xcor() < -340 and ball.xcor() > -350 and ball.ycor() < paddle_1.ycor() + 50 and ball.ycor() > paddle_1.ycor() - 50:
-            ball.setx(-340)
-            ball.ball_dx *= -1.5
-        
-        elif ball.xcor() > 340 and ball.xcor() < 350 and ball.ycor() < paddle_2.ycor() + 50 and ball.ycor() > paddle_2.ycor() - 50:
-            ball.setx(340)
-            ball.ball_dx *= -1.5
-
-
-
 
 if __name__ == "__main__":
-	main()
+	#main()
+    new_game = Game()
+    new_game.play()
