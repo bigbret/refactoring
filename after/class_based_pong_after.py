@@ -115,6 +115,7 @@ class Ball:
         #New
         new_x = self.get_xcor() + self.ball_dx
         new_y = self.get_ycor() + self.ball_dy
+        
         self.set_xcor(new_x)
         self.set_ycor(new_y)
 
@@ -122,14 +123,29 @@ class Ball:
         #self.y_position = self.turt.ycor()
         self.set_x(new_x)
         self.set_y(new_y)
+        
+        #New method to wrap around the turtle
+        self.wrap_around(new_y)
 
         # Top and bottom
-        if self.turt.ycor() > 290:
-            self.turt.sety(290)
-            self.ball_dy *= -1
+        #if new_y > 290:
+            #self.set_ycor(290)
+            #self.ball_dy *= -1
 
-        elif self.turt.ycor() < -290:
-            self.turt.sety(-290)
+        #elif new_y < -290:
+            #self.set_ycor(-290)
+            #self.ball_dy *= -1
+        
+        
+        
+    def wrap_around(self, y_pos):
+        '''Checks to see if the ball has gone beyond y boundary
+        and wrap around'''
+        if y_pos > 290:
+            self.set_ycor(290)
+            self.ball_dy *= -1
+        elif y_pos < -290:
+            self.set_ycor(-290)
             self.ball_dy *= -1
 
     #Getters and Setters for Turtle
