@@ -12,6 +12,7 @@ Bret Miller & Deka Popov
 CS321
 '''
 
+from tkinter import Y
 import turtle
 
 
@@ -98,6 +99,7 @@ class Ball:
         self.turt = make_turtle("square", "white", 1, 1, 0, 0)
         #self.ball_dx = 0.0925 #speed in x direction
         #self.ball_dy = 0.0925 #speed in y direction
+        #New: Ball Speed added to the init
         self.ball_dx = ball_speed
         self.ball_dy = ball_speed
         self.x_position = 0
@@ -108,11 +110,18 @@ class Ball:
         ''' moves the ball in x and y directions '''
 
         # Move the ball
-        self.turt.setx(self.turt.xcor() + self.ball_dx)
-        self.turt.sety(self.turt.ycor() + self.ball_dy)
+        #self.turt.setx(self.turt.xcor() + self.ball_dx)
+        #self.turt.sety(self.turt.ycor() + self.ball_dy)
+        #New
+        new_x = self.get_xcor() + self.ball_dx
+        new_y = self.get_ycor() + self.ball_dy
+        self.set_xcor(new_x)
+        self.set_ycor(new_y)
 
-        self.x_position = self.turt.xcor()
-        self.y_position = self.turt.ycor()
+        #self.x_position = self.turt.xcor()
+        #self.y_position = self.turt.ycor()
+        self.set_x(new_x)
+        self.set_y(new_y)
 
         # Top and bottom
         if self.turt.ycor() > 290:
@@ -123,28 +132,49 @@ class Ball:
             self.turt.sety(-290)
             self.ball_dy *= -1
 
-    
-    def xcor(self):
+    #Getters and Setters for Turtle
+    def get_xcor(self):
         ''' returns turtle x_cord '''
         return self.turt.xcor()
 
-    
-    def ycor(self):
+    def get_ycor(self):
         ''' returns turtle y_cord '''
         return self.turt.ycor()
-
-
+    
+    #New 
+    def set_xcor(self, xcord):
+        '''Setst the turtle x coordinate'''
+        self.turt.setx(xcord)
+    
+    #New 
+    def set_ycor(self, ycord):
+        '''Sets the turtle y coordinate'''
+        self.turt.sety(ycord)
+        
     def goto(self, x_pos, y_pos):
         ''' moves ball to new x, y positions '''
         self.turt.goto(x_pos, y_pos)
         self.x_position = x_pos
         self.y_position = y_pos
+        
+    #Getters and Setters for the Balls Position 
+    def get_x(self):
+        '''return the balls x position'''
+        return self.x_position
+    
+    def get_y(self):
+        '''return the balls y position'''
+        return self.y_position
 
-
-    def setx(self, x_cor):
+    def set_x(self, x_cor):
         ''' sets the ball x position '''
-        self.turt.setx(x_cor)
+        self.set_xcor(x_cor)
         self.x_position = x_cor
+    
+    def set_y(self, y_cor):
+        '''sets the ball y position'''
+        self.set_ycor(y_cor)
+        self.y_position = y_cor
 
 
 
