@@ -31,6 +31,7 @@ class Paddle:
         y = self.turt.ycor()
         y += 20
         self.turt.sety(y)
+        #TODO this should have a getter and setter for the x and y coordinate instance
         self.y_position = y
 
 
@@ -49,6 +50,14 @@ class Paddle:
     def ycor(self):
         ''' returns turtle y_cord '''
         return self.turt.ycor()
+    
+    #New 
+    def get_xpos(self):
+        return self.x_position
+    
+    #New 
+    def get_ypos(self):
+        return self.y_position
 
 
 
