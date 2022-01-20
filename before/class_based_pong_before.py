@@ -9,8 +9,7 @@ description: simple implementation of the game Pong using python 3 turtles.
 '''
 Refactoring - 1/20/21
 Bret Miller & Deka Popov 
-CS321
-'''
+CS231'''
 
 import turtle
 

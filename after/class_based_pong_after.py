@@ -232,7 +232,9 @@ class Game:
         window.setup(width, height)
         window.tracer(0) #turns off screen updates for the window Speeds up the game
         return window
-
+                
+        
+        
     
     def play(self):
         '''this is where the main game loop is run'''
@@ -240,16 +242,25 @@ class Game:
             self.window.update() #This is the update to offset the wn.tracer(0)
 
             self.ball.move()
-            # Border checking    
+            
+            #grab all pertinenet numbers before logic
+            ball_x = self.ball.get_xcor()
+            ball_y = self.ball.get_ycor()
+            paddle1_y = self.paddle_1.get_ycor()
+            paddle2_y = self.paddle_2.get_ycor()
+            
+            
+            # Border checking  
             # Left and right
-            if self.ball.get_xcor() > 350:
+            #TODO Clean up Logic
+            if ball_x > 350:
                 self.score_player1 += 1
                 self.pen.clear()
                 self.pen.write("Player A: "+ str(self.score_player1) + "  Player B: "+ str(self.score_player2), align="center", font=("Courier", 24, "normal"))
                 self.ball.goto(0, 0)
                 self.ball.ball_dx *= -1
                 
-            elif self.ball.get_xcor() < -350:
+            elif ball_x < -350:
                 self.score_player2 += 1
                 self.pen.clear()
                 self.pen.write("Player A: "+ str(self.score_player1) + "  Player B: "+ str(self.score_player2), align="center", font=("Courier", 24, "normal"))
