@@ -92,12 +92,14 @@ class Paddle:
 class Ball:
     # implements a Pong game ball
 
-    def __init__(self):
+    def __init__(self, ball_speed):
         ''' intializes a ball with default direction and position '''
 
         self.turt = make_turtle("square", "white", 1, 1, 0, 0)
-        self.ball_dx = 0.0925 #speed in x direction
-        self.ball_dy = 0.0925 #speed in y direction
+        #self.ball_dx = 0.0925 #speed in x direction
+        #self.ball_dy = 0.0925 #speed in y direction
+        self.ball_dx = ball_speed
+        self.ball_dy = ball_speed
         self.x_position = 0
         self.y_position = 0
 
@@ -184,7 +186,7 @@ def main():
     paddle_2 = Paddle(350, 0)
 
     # ball
-    ball = Ball()
+    ball = Ball(0.0925)
 
     # Pen
     pen = make_turtle("square", "white", 1, 1, 0, 260)
