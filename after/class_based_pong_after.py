@@ -27,26 +27,16 @@ class Paddle:
 
         self.turt = make_turtle("square", "white", 5, 1, self.x_position, self.y_position)
 
-
     def up(self):
         y = self.turt.ycor()
         y += 20
-        #self.turt.sety(y)
-        #New: setter 
         self.set_ycord(y)
-        #self.y_position = y
-        #New changed to setter
         self.set_ypos(y)
-
 
     def down(self):
         y = self.turt.ycor() #Get the current y coordinate
         y -= 20             #add 20px could also be y=y+20
-        #self.turt.sety(y)    #move the paddle to the new y position
-        #New: setter
         self.set_ycord(y)
-        #self.y_position = y
-        #New: changed to setter 
         self.set_ypos(y)
 
     #changed the function name
@@ -88,53 +78,30 @@ class Paddle:
         '''sets the y position'''
         self.y_position = ypos
     
-
-
+    
 class Ball:
     # implements a Pong game ball
 
     def __init__(self, ball_speed):
         ''' intializes a ball with default direction and position '''
-
         self.turt = make_turtle("square", "white", 1, 1, 0, 0)
-        #self.ball_dx = 0.0925 #speed in x direction
-        #self.ball_dy = 0.0925 #speed in y direction
-        #New: Ball Speed added to the init
         self.ball_dx = ball_speed
         self.ball_dy = ball_speed
         self.x_position = 0
         self.y_position = 0
-
-
+        
     def move(self):
         ''' moves the ball in x and y directions '''
-
         # Move the ball
-        #self.turt.setx(self.turt.xcor() + self.ball_dx)
-        #self.turt.sety(self.turt.ycor() + self.ball_dy)
-        #New
         new_x = self.get_xcor() + self.ball_dx
         new_y = self.get_ycor() + self.ball_dy
-        
         self.set_xcor(new_x)
         self.set_ycor(new_y)
-
-        #self.x_position = self.turt.xcor()
-        #self.y_position = self.turt.ycor()
         self.set_x(new_x)
         self.set_y(new_y)
         
         #New method to wrap around the turtle
         self.wrap_around(new_y)
-
-        # Top and bottom
-        #if new_y > 290:
-            #self.set_ycor(290)
-            #self.ball_dy *= -1
-
-        #elif new_y < -290:
-            #self.set_ycor(-290)
-            #self.ball_dy *= -1
 
     def wrap_around(self, y_pos):
         '''Checks to see if the ball has gone beyond y boundary
@@ -155,12 +122,10 @@ class Ball:
         ''' returns turtle y_cord '''
         return self.turt.ycor()
     
-    #New 
     def set_xcor(self, xcord):
         '''Setst the turtle x coordinate'''
         self.turt.setx(xcord)
-    
-    #New 
+     
     def set_ycor(self, ycord):
         '''Sets the turtle y coordinate'''
         self.turt.sety(ycord)
@@ -189,7 +154,6 @@ class Ball:
         '''sets the ball y position'''
         self.set_ycor(y_cor)
         self.y_position = y_cor
-
 
 
 '''New class that will encapsulate the game'''
@@ -222,10 +186,8 @@ class Game:
         self.window.onkeypress(self.paddle_2.up, "Up")
         self.window.onkeypress(self.paddle_2.down, "Down")
         
-
     def make_window(self,window_title, bgcolor, width, height):
         '''this function creates a screen object and returns it'''
-
         window = turtle.getscreen() #Set the window size
         window.title(window_title)
         window.bgcolor(bgcolor)
@@ -233,9 +195,6 @@ class Game:
         window.tracer(0) #turns off screen updates for the window Speeds up the game
         return window
                 
-        
-        
-    
     def play(self):
         '''this is where the main game loop is run'''
         while True:
@@ -247,12 +206,10 @@ class Game:
             ball_x = self.ball.get_xcor()
             ball_y = self.ball.get_ycor()
             paddle1_y = self.paddle_1.get_ycor()
-            paddle2_y = self.paddle_2.get_ycor()
-            
+            paddle2_y = self.paddle_2.get_ycor()            
             
             # Border checking  
             # Left and right
-            #TODO Clean up Logic
             if ball_x > 350:
                 self.score_player1 += 1
                 self.pen.clear()
@@ -268,12 +225,12 @@ class Game:
                 self.ball.ball_dx *= -1
             
              # Paddle and ball collisions
-            if self.ball.get_xcor() < -340 and self.ball.get_xcor() > -350 and self.ball.get_ycor() < self.paddle_1.get_ycor() + 50 and self.ball.get_ycor() > self.paddle_1.get_ycor() - 50:
-                self.ball.setx(-340)
+            if ball_x < -340 and ball_x > -350 and ball_y < paddle1_y + 50 and ball_y > paddle1_y - 50:
+                self.ball.set_x(-340)
                 self.ball.ball_dx *= -1.5
             
-            elif self.ball.get_xcor() > 340 and self.ball.get_xcor() < 350 and self.ball.get_ycor() < self.paddle_2.get_ycor() + 50 and self.ball.get_ycor() > self.paddle_2.get_ycor() - 50:
-                self.ball.setx(340)
+            elif ball_x > 340 and ball_x < 350 and ball_y < paddle2_y + 50 and ball_y > paddle2_y - 50:
+                self.ball.set_x(340)
                 self.ball.ball_dx *= -1.5
                 
 
@@ -290,8 +247,6 @@ def make_turtle(shape, color, stretch_width, stretch_length, x_pos, y_pos):
     return turt
 
 
-
 if __name__ == "__main__":
-	#main()
     new_game = Game()
     new_game.play()
