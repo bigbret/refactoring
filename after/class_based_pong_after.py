@@ -200,6 +200,17 @@ class Game:
         self.pen.clear()
         self.pen.write("Player A: "+ str(self.score_player1) + "  Player B: "+ str(self.score_player2), align="center", font=("Courier", 24, "normal"))
         self.ball.goto(0, 0)
+        
+    def check_collisions(self, ball_x, ball_y, paddle1_y, paddle2_y):
+        '''function that checks to see if the ball and the paddle
+        have collided'''
+        if ball_x < -340 and ball_x > -350 and ball_y < paddle1_y + 50 and ball_y > paddle1_y - 50:
+            self.ball.set_x(-340)
+            self.ball.ball_dx *= -1.5
+            
+        elif ball_x > 340 and ball_x < 350 and ball_y < paddle2_y + 50 and ball_y > paddle2_y - 50:
+            self.ball.set_x(340)
+            self.ball.ball_dx *= -1.5
                 
     def play(self):
         '''this is where the main game loop is run'''
@@ -226,14 +237,8 @@ class Game:
                 self.write_score()
                 self.ball.ball_dx *= -1
             
-             # Paddle and ball collisions
-            if ball_x < -340 and ball_x > -350 and ball_y < paddle1_y + 50 and ball_y > paddle1_y - 50:
-                self.ball.set_x(-340)
-                self.ball.ball_dx *= -1.5
-            
-            elif ball_x > 340 and ball_x < 350 and ball_y < paddle2_y + 50 and ball_y > paddle2_y - 50:
-                self.ball.set_x(340)
-                self.ball.ball_dx *= -1.5
+            # Paddle and ball collisions
+            self.check_collisions(ball_x, ball_y, paddle1_y, paddle2_y)
                 
 
 def make_turtle(shape, color, stretch_width, stretch_length, x_pos, y_pos):
