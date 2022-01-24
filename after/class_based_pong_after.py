@@ -105,11 +105,13 @@ class Ball:
     def wrap_around(self, y_pos):
         '''Checks to see if the ball has gone beyond y boundary
         and wrap around'''
-        if y_pos > 290:
-            self.set_ycor(290)
+        right = 290
+        left = -290
+        if y_pos > right:
+            self.set_ycor(right)
             self.ball_dy *= -1
-        elif y_pos < -290:
-            self.set_ycor(-290)
+        elif y_pos < left:
+            self.set_ycor(left)
             self.ball_dy *= -1
 
     #Getters and Setters for Turtle
@@ -204,11 +206,12 @@ class Game:
     def check_collisions(self, ball_x, ball_y, paddle1_y, paddle2_y):
         '''function that checks to see if the ball and the paddle
         have collided'''
-        if ball_x < -340 and ball_x > -350 and ball_y < paddle1_y + 50 and ball_y > paddle1_y - 50:
+        padding = 50
+        if ball_x < -340 and ball_x > -350 and ball_y < paddle1_y + padding and ball_y > paddle1_y - padding:
             self.ball.set_x(-340)
             self.ball.ball_dx *= -1.5
             
-        elif ball_x > 340 and ball_x < 350 and ball_y < paddle2_y + 50 and ball_y > paddle2_y - 50:
+        elif ball_x > 340 and ball_x < 350 and ball_y < paddle2_y + padding and ball_y > paddle2_y - padding:
             self.ball.set_x(340)
             self.ball.ball_dx *= -1.5
                 
