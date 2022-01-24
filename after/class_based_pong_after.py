@@ -12,7 +12,6 @@ Bret Miller & Deka Popov
 CS321
 '''
 
-from tkinter import Y
 import turtle
 
 
