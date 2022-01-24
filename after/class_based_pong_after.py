@@ -193,6 +193,13 @@ class Game:
         window.setup(width, height)
         window.tracer(0) #turns off screen updates for the window Speeds up the game
         return window
+    
+    def write_score(self):
+        '''this is where the players scores are rewritten 
+        after scoring points'''
+        self.pen.clear()
+        self.pen.write("Player A: "+ str(self.score_player1) + "  Player B: "+ str(self.score_player2), align="center", font=("Courier", 24, "normal"))
+        self.ball.goto(0, 0)
                 
     def play(self):
         '''this is where the main game loop is run'''
@@ -211,16 +218,12 @@ class Game:
             # Left and right
             if ball_x > 350:
                 self.score_player1 += 1
-                self.pen.clear()
-                self.pen.write("Player A: "+ str(self.score_player1) + "  Player B: "+ str(self.score_player2), align="center", font=("Courier", 24, "normal"))
-                self.ball.goto(0, 0)
+                self.write_score()
                 self.ball.ball_dx *= -1
                 
             elif ball_x < -350:
                 self.score_player2 += 1
-                self.pen.clear()
-                self.pen.write("Player A: "+ str(self.score_player1) + "  Player B: "+ str(self.score_player2), align="center", font=("Courier", 24, "normal"))
-                self.ball.goto(0, 0)
+                self.write_score()
                 self.ball.ball_dx *= -1
             
              # Paddle and ball collisions
